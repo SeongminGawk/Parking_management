@@ -1,0 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 40px; 
+}
+
+.square{
+    width: 7px;
+    height: 30px;
+    background-color: rgb(128, 128, 128);
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.login-container{
+    width: 550px;
+    padding: 20px;
+    background-color: transparent;
+    box-shadow: none;
+    text-align: left;
+    float: right;
+}
+
+.login-container h1 {
+    font-size: 30px;
+    color: rgb(66, 66, 74);
+    margin: 0;
+}
+
+.login-container p {
+    font-size: 14px;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 70px;
+    height: 20px;
+    margin-right: 10px;
+    text-align: left;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.input-button-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.input-fields {
+    width: 100%;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 260px;
+    height: 25px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.login-button {
+    padding: 0;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 240px;
+    margin-right: 48px;
+    margin-bottom: 10px;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    clear: both; 
+}
+
+.remember input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.remember label {
+    white-space: nowrap;
+}
+
+.additional-options {
+    margin-top: 15px;
+    clear: both; 
+}
+
+.additional-options-register .option {
+    display: flex;
+    align-items: center;
+}
+
+.additional-options-find .option {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.additional-options a {
+    text-decoration: none;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.additional-options a:hover {
+    text-decoration: underline;
+}
+
+.additional-options-register p {
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+.additional-options-find p {
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+.additional-options-register button {
+    width: 150px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    display: inline-block;
+    background-color: #555;
+    color: #fff;
+    margin-left: 132px;
+}
+
+.additional-options-find button {
+    width: 150px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    display: inline-block;
+    background-color: #555;
+    color: #fff;
+    margin-left: 79px;
+}
+
+.register-button {
+    background-color: #555;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.find-info-button {
+    background-color: #555;
+    color: #fff;
+    margin-left: 10px;
+}
+
+
