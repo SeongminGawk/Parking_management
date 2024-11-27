@@ -77,8 +77,8 @@ tr.vertical-border th, tr.vertical-border td {
 }
 
 .img-container img {
-    width: 90%; /* 이미지 너비를 테이블의 90%로 설정 */
-    height: auto; /* 높이는 자동으로 조정 */
+    width: 90%; 
+    height: auto; 
 }
 
 .button-group {
