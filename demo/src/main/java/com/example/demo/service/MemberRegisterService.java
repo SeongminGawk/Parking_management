@@ -32,7 +32,6 @@ public class MemberRegisterService {
     private SecretKey aesKey;
 
     public MemberRegisterService() throws NoSuchAlgorithmException {
-        // AES 생성
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256);
         this.aesKey = keyGen.generateKey();
@@ -40,7 +39,6 @@ public class MemberRegisterService {
 
     @Transactional
     public Member registerMember(String encryptedUserid, String encryptedUsername, String encryptedPassword, String encryptedPhoneNumber, String encryptedEmail) throws Exception {
-        // RSA로 복호화
         String userid = rsaKeyService.decrypt(encryptedUserid);
         String name = rsaKeyService.decrypt(encryptedUsername);
         String rawPassword = rsaKeyService.decrypt(encryptedPassword);
@@ -52,19 +50,16 @@ public class MemberRegisterService {
             throw new IllegalArgumentException("이미 사용 중이거나 탈퇴한 아이디입니다");
         }
 
-        // 솔트 생성
         String salt = generateSalt();
-
-        // 비밀번호와 솔트값을 결합하여 SHA-256으로 해시화
         String passwordWithSalt = rawPassword + salt;
         String hashedPassword = hashWithSHA256(passwordWithSalt);
 
         Member member = new Member();
         member.setUserid(userid);
         member.setName(name);
-        member.setPassword(hashedPassword); // 해시화된 비밀번호 저장
-        member.setPhoneNumber(encryptWithAES(phoneNumber)); // 전화번호 암호화
-        member.setEmail(encryptWithAES(email)); // 이메일 암호화
+        member.setPassword(hashedPassword); 
+        member.setPhoneNumber(encryptWithAES(phoneNumber)); 
+        member.setEmail(encryptWithAES(email)); 
         member.setCreatedAt(LocalDateTime.now());
         member.setSalt(salt);
 
@@ -79,7 +74,6 @@ public class MemberRegisterService {
         }
     }
 
-    // AES 암호화
     private String encryptWithAES(String data) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, aesKey);
@@ -87,7 +81,6 @@ public class MemberRegisterService {
         return Base64.getEncoder().encodeToString(encryptedData);
     }
 
-    // SHA-256 해시
     private String hashWithSHA256(String data) throws NoSuchAlgorithmException {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -97,8 +90,7 @@ public class MemberRegisterService {
             throw new RuntimeException("Error encoding data to UTF-8", e);
         }
     }
-
-    // 솔트 생성
+    
     private String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -106,14 +98,12 @@ public class MemberRegisterService {
         return Base64.getEncoder().encodeToString(salt);
     }
 
-    // RSA 공개키 제공
     public Map<String, String> getRSAKeys() {
         Map<String, String> keys = new HashMap<>();
         keys.put("publicKey", rsaKeyService.getPublicKey());
         return keys;
     }
 
-    // 아이디 존재 여부
     public boolean checkUseridExists(String userid) {
         return memberRepository.existsByUserid(userid);
     }
