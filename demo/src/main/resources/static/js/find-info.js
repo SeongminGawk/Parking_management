@@ -1,10 +1,8 @@
-// CSRF 토큰을 쿠키에서 추출하는 함수
 function getCsrfTokenFromCookie() {
     const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
 }
 
-// 서버 요청 함수
 async function sendRequest(url, payload, csrfToken) {
     try {
         const response = await fetch(url, {
@@ -29,12 +27,10 @@ async function sendRequest(url, payload, csrfToken) {
     }
 }
 
-// 버튼 활성/비활성화 함수
 function toggleButtonState(button, isDisabled) {
     if (button) button.disabled = isDisabled;
 }
 
-// 페이지가 로드되었을 때 실행
 document.addEventListener("DOMContentLoaded", () => {
     const csrfToken = getCsrfTokenFromCookie();
     if (!csrfToken) {
@@ -45,11 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("CSRF Token:", csrfToken);
 
-    // 버튼 요소 가져오기
     const findIdBtn = document.getElementById("findIdBtn");
     const findPasswordBtn = document.getElementById("findPasswordBtn");
 
-    // 섹션 전환 버튼
     document.getElementById("findIdButton").addEventListener("click", () => {
         document.getElementById("findIdSection").classList.remove("hidden");
         document.getElementById("findPasswordSection").classList.add("hidden");
@@ -60,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("findIdSection").classList.add("hidden");
     });
 
-    // 아이디 찾기
     findIdBtn.addEventListener("click", async () => {
         const name = document.getElementById("name")?.value.trim();
 
@@ -77,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await sendRequest("/find-info/find-id", payload, csrfToken);
 
             if (response.success) {
-                const userIds = response.userIds.join("\n"); // 여러 아이디를 줄바꿈으로 연결
+                const userIds = response.userIds.join("\n"); 
                 alert(`등록된 아이디:\n${userIds}`);
             } else {
                 alert(response.message);
@@ -89,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 비밀번호 재설정
     findPasswordBtn.addEventListener("click", async () => {
     const userId = document.getElementById("userId")?.value.trim();
     const name = document.getElementById("nameForPassword")?.value.trim();
@@ -108,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await sendRequest("/find-info/reset-password", payload, csrfToken);
 
         if (response.success) {
-            alert(response.message); // 성공 메시지 출력
-            window.location.href = "/login"; // 로그인 페이지로 이동
+            alert(response.message); 
+            window.location.href = "/login"; 
         } else {
             alert(`오류: ${response.message}`);
         }
