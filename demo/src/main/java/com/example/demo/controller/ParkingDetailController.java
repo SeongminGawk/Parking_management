@@ -19,10 +19,7 @@ public class ParkingDetailController {
     @GetMapping("/parking-details")
     public String parkingDetails(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userid");
-
-        // 마지막으로 등록된 주차장 정보 가져오기
         ParkingLot parkingLot = parkingService.findLatestParkingLotByUserId(userId);
-        
         model.addAttribute("parking", parkingLot);
 
         return "parking-details";
