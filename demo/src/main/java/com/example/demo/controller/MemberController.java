@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.MemberRegisterService;
-import com.example.demo.service.FindInfoService;  // 새로운 서비스 추가
+import com.example.demo.service.FindInfoService;  
 import com.example.demo.service.RSAKeyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,17 @@ public class MemberController {
     private MemberRegisterService memberRegisterService;
 
     @Autowired
-    private FindInfoService findInfoService; // FindInfoService 주입
+    private FindInfoService findInfoService;
 
     @Autowired
     private RSAKeyService rsaKeyService;
 
-    // 회원가입 페이지
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("publicKey", rsaKeyService.getPublicKey());
         return "register";
     }
 
-    // 회원가입 처리
     @PostMapping("/register")
     public String registerMember(
         @RequestParam String encryptedUserid,
@@ -59,13 +57,11 @@ public class MemberController {
             }
     }
 
-    // 아이디/비밀번호 찾기 페이지
     @GetMapping("/find-info")
     public String showFindInfoPage() {
         return "find-info";  // find-info.html을 반환
     }
 
-    // RSA 공개 키 제공
     @GetMapping("/getPublicKey")
     @ResponseBody
     public Map<String, String> getPublicKey() {
@@ -74,7 +70,6 @@ public class MemberController {
         return response;
     }
 
-    // 아이디 중복 체크
     @GetMapping(value = "/checkUserid", produces = "application/json")
     @ResponseBody
     public Map<String, Object> checkUserid(@RequestParam String userid) {
@@ -85,14 +80,13 @@ public class MemberController {
         return response;
     }
 
- // 이름으로 아이디 찾기
     @PostMapping("/find-id")
     @ResponseBody
     public Map<String, Object> findId(@RequestBody Map<String, String> requestData) {
         Map<String, Object> response = new HashMap<>();
         try {
-            String name = requestData.get("name"); // 이름 추출
-            List<String> userId = findInfoService.findIdsByName(name); // 서비스 호출
+            String name = requestData.get("name"); 
+            List<String> userId = findInfoService.findIdsByName(name); 
 
             response.put("success", true);
             response.put("userId", userId);
@@ -113,7 +107,6 @@ public class MemberController {
             String name = requestData.get("name");
             String newPassword = requestData.get("newPassword");
 
-            // 비밀번호 재설정 로직 호출
             boolean resetSuccess = findInfoService.resetPassword(userId, name, newPassword);
 
             if (resetSuccess) {
