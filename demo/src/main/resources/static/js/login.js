@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
 
-    // 로컬 스토리지에서 저장된 아이디 불러오기
     const savedUserid = localStorage.getItem('savedUserid');
     if (savedUserid) {
         document.getElementById('userid').value = savedUserid;
@@ -20,14 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const rememberMeCheckbox = document.getElementById('remember-me');
         const userid = document.getElementById('userid').value;
 
-        // "아이디 기억하기" 체크박스 상태에 따라 로컬 스토리지에 아이디 저장/삭제
         if (rememberMeCheckbox.checked) {
             localStorage.setItem('savedUserid', userid);
         } else {
             localStorage.removeItem('savedUserid');
         }
 
-        // 암호화 로직 시작
         var encrypt = new JSEncrypt();
         encrypt.setPublicKey(publicKey);
 
