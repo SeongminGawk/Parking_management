@@ -26,27 +26,24 @@ function encryptForm() {
     var encrypt = new JSEncrypt();
     encrypt.setPublicKey(publicKey);
     
-    //입력값 가져오기
     var userid = document.getElementById("userid").value;
     var name = document.getElementById("name").value;
     var phoneNumber = document.getElementById("phoneNumber").value;
     var email = document.getElementById("email").value;
 
-    //가져온 입력값 RSA 공개키로 암호화
+    //입력값 RSA 공개키로 암호화
     var encryptedUserid = encrypt.encrypt(userid);
     var encryptedUsername = encrypt.encrypt(name);
     var encryptedPassword = encrypt.encrypt(password);
     var encryptedPhoneNumber = encrypt.encrypt(phoneNumber);
     var encryptedEmail = encrypt.encrypt(email);
 
-    // 암호화된 값을 숨겨진 입력 필드에 설정합니다.
     document.getElementById("encryptedUserid").value = encryptedUserid;
     document.getElementById("encryptedUsername").value = encryptedUsername;
     document.getElementById("encryptedPassword").value = encryptedPassword;
     document.getElementById("encryptedPhoneNumber").value = encryptedPhoneNumber;
     document.getElementById("encryptedEmail").value = encryptedEmail;
 
-    // 입력값 비우기
     document.getElementById("userid").value = "";
     document.getElementById("name").value = "";
     document.getElementById("password").value = "";
@@ -59,23 +56,23 @@ function encryptForm() {
 
 function checkDuplicateUserid() {
     var userid = document.getElementById("userid").value;
-    console.log("Checking userid: " + userid); // 디버깅을 위한 콘솔 로그
+    console.log("Checking userid: " + userid); 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/checkUserid?userid=" + encodeURIComponent(userid), true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.responseText); // 응답 데이터 로그 출력
+            console.log(xhr.responseText); 
             if (xhr.status === 200) {
                 try {
                     var response = JSON.parse(xhr.responseText);
                     var message = response.message;
-                    alert(message); // 결과 메시지를 alert로 표시
+                    alert(message); 
                 } catch (e) {
-                    console.error("Parsing error:", e); // JSON 파싱 오류 로그 출력
+                    console.error("Parsing error:", e); 
                     alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
                 }
             } else {
-                console.error("Error: " + xhr.status); // 오류 로그 출력
+                console.error("Error: " + xhr.status); 
                 alert("서버와 통신하는 중 오류가 발생했습니다.");
             }
         }
