@@ -22,21 +22,20 @@ public class FindInfoController {
     @Autowired
     private FindInfoService findInfoService;
 
- // 이름으로 아이디 찾기
     @PostMapping("/find-id")
     @ResponseBody
     public Map<String, Object> findId(@RequestBody Map<String, String> requestData) {
         Map<String, Object> response = new HashMap<>();
         try {
-            String name = requestData.get("name"); // 이름 추출
-            List<String> userIds = findInfoService.findIdsByName(name); // 서비스 호출
+            String name = requestData.get("name"); 
+            List<String> userIds = findInfoService.findIdsByName(name); 
 
             if (userIds.isEmpty()) {
                 response.put("success", false);
                 response.put("message", "해당 이름으로 등록된 아이디가 없습니다.");
             } else {
                 response.put("success", true);
-                response.put("userIds", userIds); // 리스트 반환
+                response.put("userIds", userIds); 
             }
         } catch (Exception e) {
             response.put("success", false);
