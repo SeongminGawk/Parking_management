@@ -45,7 +45,7 @@ import com.example.demo.service.ParkingService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/parking") //기본 경로 설정
+@RequestMapping("/parking") 
 @Slf4j
 public class ParkingController {
 
@@ -62,7 +62,7 @@ public class ParkingController {
 
     @PostMapping("/register")
     @ResponseBody
-    @Transactional // 트랜잭션 설정
+    @Transactional 
     public ResponseEntity<Map<String, Object>> registerParking(
             @RequestParam("prk_lot_nm") String prkLotNm,
             @RequestParam("bas_addr") String basAddr,
@@ -83,13 +83,10 @@ public class ParkingController {
         log.info("registerParking called with prk_lot_nm: {}, bas_addr: {}, dtl_addr: {}", prkLotNm, basAddr, dtlAddr);
 
         try {
-            // 세션에서 인증된 사용자 아이디 가져오기
             String regId = (String) session.getAttribute("userid");
 
-            // 주차장 관리번호 조립
             String prkLotId = String.format("%s-%s-%s", prkLotIdA, prkLotIdB, prkLotIdC);
 
-            // 이미지 파일 저장
             String imagePath = saveImage(prkImage);
 
             ParkingLot parkingLot = new ParkingLot();
@@ -97,9 +94,8 @@ public class ParkingController {
             parkingLot.setZipcd(prkLotIdA);
             parkingLot.setBasAddr(basAddr);
             parkingLot.setDtlAddr(dtlAddr);
-            parkingLot.setPrkLotId(prkLotId); // 주차장 관리번호 설정
+            parkingLot.setPrkLotId(prkLotId); 
 
-            // instDt 필드가 not null 속성이므로 null로 설정하지 않음
             parkingLot.setInstDt(LocalDate.parse(instDt));
 
             parkingLot.setLatitude(latitude);
@@ -107,7 +103,6 @@ public class ParkingController {
             parkingLot.setPrkCmprtCo(prkCmprtCo);
             
             if (opertnDay != null) {
-                // 중복 제거
                 Set<String> uniqueOpertnDays = new HashSet<>(Arrays.asList(opertnDay.split(",")));
                 String opertnDaysStr = uniqueOpertnDays.stream().collect(Collectors.joining(","));
                 parkingLot.setOpertnDay(opertnDaysStr);
@@ -115,13 +110,13 @@ public class ParkingController {
             
             parkingLot.setPrkChrgMthd(prkChrgeMthd);
             parkingLot.setImagePath(imagePath);
-            parkingLot.setRgtrId(regId); // 인증된 사용자 ID 설정
+            parkingLot.setRgtrId(regId); 
             parkingLot.setRegDt(LocalDateTime.now());
 
             parkingService.save(parkingLot);
 
             response.put("status", "success");
-            response.put("parkingLotId", parkingLot.getId()); // 등록된 주차장 ID 반환
+            response.put("parkingLotId", parkingLot.getId());
             return ResponseEntity.ok(response);
         } catch (DataIntegrityViolationException e) {
             log.error("DataIntegrityViolationException: ", e);
@@ -158,7 +153,7 @@ public class ParkingController {
     }
 
     @GetMapping("/getNextPrkLotSeq")
-    @ResponseBody // GET 요청에 대해 /getNextPrkLotSeq 경로를 매핑합니다. 다음 주차장 순번을 JSON 형식으로 반환
+    @ResponseBody
     public Map<String, Integer> getNextPrkLotSeq() {
         Integer nextSeq = parkingService.getNextParkingLotSeq();
         Map<String, Integer> response = new HashMap<>();
@@ -167,7 +162,7 @@ public class ParkingController {
     }
 
     @GetMapping("/uploads/{filename:.+}")
-    @ResponseBody //이미지 파일을 읽고 없으면 404 또는 500 에러 반환
+    @ResponseBody 
     public ResponseEntity<org.springframework.core.io.Resource> serveFile(@PathVariable String filename) {
         try {
             Path file = Paths.get(uploadDir).resolve(filename);
@@ -185,9 +180,7 @@ public class ParkingController {
         }
     }
     
-    // MultipartFile 객체를 받아 이미지를 저장하는 메서드. 파일 이름을 현재 날짜와 시간으로 설정하여 중복을 피한다.
     private String saveImage(MultipartFile image) throws IOException {
-        // 폴더 없으면 생성
         File uploadDirFile = new File(uploadDir);
         if (!uploadDirFile.exists()) {
             uploadDirFile.mkdirs();
@@ -196,7 +189,7 @@ public class ParkingController {
         String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + image.getOriginalFilename();
         File file = new File(uploadDirFile, fileName);
         image.transferTo(file);
-        return file.getName(); // 절대 경로가 아닌 파일 이름만 반환
+        return file.getName(); 
     }
 
     @GetMapping("/details/{id}")
@@ -211,11 +204,10 @@ public class ParkingController {
             return "parking-details";
         } else {
             log.warn("Parking lot with ID {} not found", id);
-            return "error/404"; // 적절한 에러 페이지로 리다이렉트
+            return "error/404"; 
         }
     }
 
-    //예외처리 메서드
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception e) {
         log.error("Unhandled exception: ", e);
