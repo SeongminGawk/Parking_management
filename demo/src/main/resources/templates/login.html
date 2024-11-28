@@ -47,14 +47,8 @@
             </div>
         </form>
         <div class="additional-options">
-            <div class="additional-options-register">
-                <p>▷ 회원가입후 이용이 가능합니다.</p>
-                <button class="register-button" onclick="window.location.href='/register'">회원가입</button>
-            </div>
-            <div class="additional-options-find">
-                <p>▷ 시스템 이용 문의사항 (T) 053-000-0000</p>
-                <button class="find-info-button" onclick="window.location.href='/find-info'">아이디/비밀번호 찾기</button>
-            </div>
+            <button class="register-button" onclick="window.location.href='/register'">회원가입</button>
+            <button class="find-info-button" onclick="window.location.href='/find-info'">아이디/비밀번호 찾기</button>
         </div>
         <div th:if="${error}" class="error-message" th:text="|${error}|">
             <script>
