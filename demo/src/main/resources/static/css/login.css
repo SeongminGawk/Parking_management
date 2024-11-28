@@ -15,7 +15,7 @@ body {
     margin-top: 40px; 
 }
 
-.square{
+.square {
     width: 7px;
     height: 30px;
     background-color: rgb(128, 128, 128);
@@ -24,7 +24,7 @@ body {
     margin-top: 5px;
 }
 
-.login-container{
+.login-container {
     width: 550px;
     padding: 20px;
     background-color: transparent;
@@ -115,75 +115,21 @@ body {
 .additional-options {
     margin-top: 15px;
     clear: both; 
+    text-align: center; 
 }
 
-.additional-options-register .option {
-    display: flex;
-    align-items: center;
-}
-
-.additional-options-find .option {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.additional-options a {
-    text-decoration: none;
-    font-size: 12px;
-    margin-right: 10px;
-}
-
-.additional-options a:hover {
-    text-decoration: underline;
-}
-
-.additional-options-register p {
-    margin-bottom: 0px;
-    display: inline-block;
-}
-
-.additional-options-find p {
-    margin-bottom: 0px;
-    display: inline-block;
-}
-
-.additional-options-register button {
-    width: 150px;
-    height: 30px;
+.additional-options button {
+    width: 200px; 
+    height: 50px; 
     border: none;
     cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-    display: inline-block;
+    font-size: 16px; 
     background-color: #555;
     color: #fff;
-    margin-left: 132px;
+    margin: 10px 0; 
 }
 
-.additional-options-find button {
-    width: 150px;
-    height: 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-    display: inline-block;
-    background-color: #555;
-    color: #fff;
-    margin-left: 79px;
+.additional-options button:hover {
+    background-color: #333; 
 }
-
-.register-button {
-    background-color: #555;
-    color: #fff;
-    margin-left: 10px;
-}
-
-.find-info-button {
-    background-color: #555;
-    color: #fff;
-    margin-left: 10px;
-}
-
 
