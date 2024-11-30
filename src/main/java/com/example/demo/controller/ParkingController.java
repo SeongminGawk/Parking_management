@@ -36,10 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.example.demo.entity.ParkingLot;
 import com.example.demo.service.ParkingService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
