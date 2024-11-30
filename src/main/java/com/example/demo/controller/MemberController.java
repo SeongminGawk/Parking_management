@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Controller
 public class MemberController {
-
     @Autowired
     private MemberRegisterService memberRegisterService;
 
