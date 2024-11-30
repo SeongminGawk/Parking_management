@@ -9,12 +9,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 
@@ -40,19 +37,19 @@ public class FindInfoService {
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
 
-            // 새 비밀번호 처리
-            String salt = generateSalt(); // 새로운 솔트 생성
-            String hashedPassword = hashWithSHA256(newPassword + salt); // 비밀번호 암호화
+            // 새 비밀번호 
+            String salt = generateSalt(); 
+            String hashedPassword = hashWithSHA256(newPassword + salt); 
 
-            // 멤버 정보 업데이트
+            // 정보 업데이트
             member.setPassword(hashedPassword);
             member.setSalt(salt);
-            member.setCreatedAt(LocalDateTime.now()); // 수정 시간 기록
+            member.setCreatedAt(LocalDateTime.now()); 
             memberRepository.save(member);
 
             return true;
         }
-        return false; // 일치하는 회원이 없으면 false 반환
+        return false; 
     }
 
     // 이름과 아이디로 회원 조회
@@ -60,14 +57,12 @@ public class FindInfoService {
         return memberRepository.findByUseridAndName(userId, name);
     }
 
-    // SHA-256 해싱 메서드
     private String hashWithSHA256(String data) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(data.getBytes("UTF-8"));
         return Base64.getEncoder().encodeToString(hash);
     }
-
-    // 솔트 생성 메서드
+    
     private String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
