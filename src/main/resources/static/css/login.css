@@ -115,20 +115,20 @@ body {
 .additional-options {
     margin-top: 15px;
     clear: both; 
-    text-align: center; /* 버튼들을 가운데 정렬 */
+    text-align: center; 
 }
 
 .additional-options button {
-    width: 200px; /* 동일한 너비로 설정 */
-    height: 50px; /* 동일한 높이로 설정 */
+    width: 200px; 
+    height: 50px; 
     border: none;
     cursor: pointer;
-    font-size: 16px; /* 버튼 텍스트 크기 동일하게 설정 */
+    font-size: 16px; 
     background-color: #555;
     color: #fff;
-    margin: 10px 0; /* 버튼 간의 간격 추가 */
+    margin: 10px 0; 
 }
 
 .additional-options button:hover {
-    background-color: #333; /* 호버 시 색상 변경 */
+    background-color: #333; 
 }
