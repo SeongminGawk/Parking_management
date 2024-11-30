@@ -7,7 +7,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        //WAR 배포 시 호출
         return application.sources(DemoApplication.class);
     }
 
