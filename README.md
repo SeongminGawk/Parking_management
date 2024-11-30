@@ -9,7 +9,7 @@
 - **보안 강화**: Spring Security와 암호화 기술로 안전한 데이터 관리.
 - **반응형 UI**: HTML5와 CSS3로 다양한 화면 크기에서 동작하는 디자인 구현.
 
-- ## 주요 기능
+## 주요 기능
 
 ### 1. 회원 관리
 - **회원가입**:
@@ -62,6 +62,13 @@
   - 사용자 인증 및 권한 부여.
   - 관련 코드:
     - `SecurityConfig.java`: 보안 설정.
+
+### 5. UI
+- **HTML5, CSS3, JavaScript**:
+  - 관련 파일:
+    - `register.html`, `map.html` 등: 주요 화면 레이아웃.
+    - `register.css`, `map.css` 등: 스타일링.
+    - `map.js`: 지도 및 동적 기능 처리.
 
 ## 기술 스택
 - **Backend**: Java (Spring Boot, JPA, Spring Security)
