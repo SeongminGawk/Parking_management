@@ -5,9 +5,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.Base64;
-
 import javax.crypto.Cipher;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,12 +18,10 @@ public class RSAKeyService {
     private final KeyPair rsaKeyPair;
 
     public RSAKeyService() throws NoSuchAlgorithmException {
-        // RSA 키페어 생성
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-        keyPairGen.initialize(2048); // 키 길이를 2048비트로 초기화합니다.
+        keyPairGen.initialize(2048); 
         this.rsaKeyPair = keyPairGen.generateKeyPair();
 
-        // 로그 출력
         logger.info("RSA Key Pair generated successfully.");
         logger.info("Public Key: {}", getPublicKey());
     }
@@ -57,7 +53,6 @@ public class RSAKeyService {
             cipher.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
             byte[] decryptedData = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
 
-            // 로그 출력
             logger.info("Data decrypted successfully.");
             return new String(decryptedData, "UTF-8");
         } catch (Exception e) {
@@ -65,12 +60,11 @@ public class RSAKeyService {
             throw new IllegalArgumentException("Invalid encrypted data.");
         }
     }
-
-    // RSA 키 정보 로그 출력
+    
     public void logKeyInfo() {
         PublicKey publicKey = rsaKeyPair.getPublic();
-        String keyFormat = publicKey.getFormat(); // 키 포맷
-        String algorithm = publicKey.getAlgorithm(); // 알고리즘
+        String keyFormat = publicKey.getFormat(); 
+        String algorithm = publicKey.getAlgorithm(); 
         logger.info("Public Key Format: {}", keyFormat);
         logger.info("Public Key Algorithm: {}", algorithm);
     }
