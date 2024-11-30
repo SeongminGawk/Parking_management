@@ -10,6 +10,7 @@ import com.example.demo.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByUserid(String userid);
     boolean existsByUserid(String userid);
+    
     List<Member> findAllByName(String name); 
     Optional<Member> findByUseridAndName(String userId, String name); 
 }
