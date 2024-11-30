@@ -46,7 +46,6 @@ public class FindInfoService {
             member.setSalt(salt);
             member.setCreatedAt(LocalDateTime.now()); 
             memberRepository.save(member);
-
             return true;
         }
         return false; 
