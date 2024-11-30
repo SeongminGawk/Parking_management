@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주차장 정보 등록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/parking_registration.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script src="/js/parking_registration.js" defer></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+    <div class="container">
+        <div class="title-box">
+            <h2>주차장 정보 등록</h2>
+        </div>
+        <form id="parkingForm" action="/parking/register" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <table>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="prk_lot_nm">주차장 명</label></th>
+                    <td><input type="text" id="prk_lot_nm" name="prk_lot_nm" class="short-input" maxlength="50" required></td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="bas_addr">주소</label></th>
+                    <td>
+                        <div class="address-container">
+                            <button type="button" onclick="findZipCode()">우편번호 찾기</button>
+                            <input type="text" id="bas_addr" name="bas_addr" placeholder="기본주소" readonly required>
+                            <input type="text" id="dtl_addr" name="dtl_addr" placeholder="상세주소" required>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="prk_lot_id_a">주차장 관리번호</label></th>
+                    <td>
+                        <div class="prk-lot-id-container">
+                            <input type="text" id="prk_lot_id_a" name="prk_lot_id_a" class="short-input" maxlength="5" readonly>
+                            -
+                            <input type="text" id="prk_lot_id_b" name="prk_lot_id_b" class="short-input" maxlength="8" readonly>
+                            -
+                            <input type="text" id="prk_lot_id_c" name="prk_lot_id_c" class="short-input" maxlength="5" readonly>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="inst_dt">주차장 설치일자</label></th>
+                    <td><input type="date" id="inst_dt" name="inst_dt" class="short-input" required></td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="latitude">주차장 입구</label></th>
+                    <td>
+                        <div class="input-group">
+                            <label for="latitude">위도</label>
+                            <input type="text" id="latitude" name="latitude" required>
+                            <label for="longitude">경도</label>
+                            <input type="text" id="longitude" name="longitude" required>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="prk_image">주차장 이미지</label></th>
+                    <td class="img-container">
+                        <input type="file" id="prk_image" name="prk_image" class="short-input" accept="image/jpeg,image/png" required>
+                    </td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="prk_cmprt_co">총 주차 구획 수</label></th>
+                    <td><input type="number" id="prk_cmprt_co" name="prk_cmprt_co" class="short-input" min="1" max="999" required></td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="opertn_day">주차장 운영요일</label></th>
+                    <td>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="opertn_day" value="평일"> 평일</label>
+                            <label><input type="checkbox" name="opertn_day" value="토요일"> 토요일</label>
+                            <label><input type="checkbox" name="opertn_day" value="공휴일"> 공휴일</label>
+                            <label><input type="checkbox" name="opertn_day" value="일요일"> 일요일</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="no-vertical-border">
+                    <th class="title-cell"><label for="prk_chrge_mthd">정산 방식</label></th>
+                    <td>
+                        <select id="prk_chrge_mthd" name="prk_chrge_mthd" class="short-input" required>
+                            <option value="" selected>정산 방식</option>
+                            <option value="01">무인정산</option>
+                            <option value="02">유인정산</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div class="button-group">
+                <button type="button" onclick="window.location.href='/map'">취소</button>
+                <button type="submit" id="submitButton">등록</button>
+            </div>
+            <input type="hidden" id="prk_lot_id" name="prk_lot_id">
+            <input type="hidden" id="opertn_day" name="opertn_day">
+        </form>
+    </div>
+    <div id="postcodeLayer" class="postcode-layer">
+        <div id="wrap" class="postcode-wrap"></div>
+    </div>
+</body>
+</html>
+
+

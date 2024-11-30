@@ -1,0 +1,77 @@
+package com.example.demo.service;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RSAKeyService {
+
+    private static final Logger logger = LoggerFactory.getLogger(RSAKeyService.class);
+
+    private final KeyPair rsaKeyPair;
+
+    public RSAKeyService() throws NoSuchAlgorithmException {
+        // RSA 키페어 생성
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+        keyPairGen.initialize(2048); // 키 길이를 2048비트로 초기화합니다.
+        this.rsaKeyPair = keyPairGen.generateKeyPair();
+
+        // 로그 출력
+        logger.info("RSA Key Pair generated successfully.");
+        logger.info("Public Key: {}", getPublicKey());
+    }
+
+    public String getPublicKey() {
+        // 공개 키를 Base64로 인코딩하여 문자열로 반환
+        return Base64.getEncoder().encodeToString(rsaKeyPair.getPublic().getEncoded());
+    }
+
+    public KeyPair getKeyPair() {
+        return rsaKeyPair;
+    }
+
+    // RSA 암호화 메서드 (공개 키 사용)
+    public String encrypt(String data) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, rsaKeyPair.getPublic());
+        byte[] encryptedData = cipher.doFinal(data.getBytes("UTF-8"));
+
+        // 로그 출력
+        logger.info("Data encrypted successfully.");
+        return Base64.getEncoder().encodeToString(encryptedData);
+    }
+
+    // RSA 복호화 메서드 (비공개 키 사용)
+    public String decrypt(String encryptedData) throws Exception {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
+            byte[] decryptedData = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+
+            // 로그 출력
+            logger.info("Data decrypted successfully.");
+            return new String(decryptedData, "UTF-8");
+        } catch (Exception e) {
+            logger.error("Failed to decrypt data: {}", e.getMessage());
+            throw new IllegalArgumentException("Invalid encrypted data.");
+        }
+    }
+
+    // RSA 키 정보 로그 출력
+    public void logKeyInfo() {
+        PublicKey publicKey = rsaKeyPair.getPublic();
+        String keyFormat = publicKey.getFormat(); // 키 포맷
+        String algorithm = publicKey.getAlgorithm(); // 알고리즘
+        logger.info("Public Key Format: {}", keyFormat);
+        logger.info("Public Key Algorithm: {}", algorithm);
+    }
+}
