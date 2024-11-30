@@ -43,7 +43,6 @@ public class MemberRegisterService {
         String phoneNumber = rsaKeyService.decrypt(encryptedPhoneNumber);
         String email = rsaKeyService.decrypt(encryptedEmail);
 
-
         if (memberRepository.existsByUserid(userid)) {
             throw new IllegalArgumentException("이미 사용 중이거나 탈퇴한 아이디입니다");
         }
