@@ -8,15 +8,12 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 
@@ -32,15 +29,14 @@ public class MemberRegisterService {
     private SecretKey aesKey;
 
     public MemberRegisterService() throws NoSuchAlgorithmException {
-        // AES 생성
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256);
         this.aesKey = keyGen.generateKey();
     }
 
+    // RSA로 복호화
     @Transactional
     public Member registerMember(String encryptedUserid, String encryptedUsername, String encryptedPassword, String encryptedPhoneNumber, String encryptedEmail) throws Exception {
-        // RSA로 복호화
         String userid = rsaKeyService.decrypt(encryptedUserid);
         String name = rsaKeyService.decrypt(encryptedUsername);
         String rawPassword = rsaKeyService.decrypt(encryptedPassword);
@@ -51,20 +47,17 @@ public class MemberRegisterService {
         if (memberRepository.existsByUserid(userid)) {
             throw new IllegalArgumentException("이미 사용 중이거나 탈퇴한 아이디입니다");
         }
-
-        // 솔트 생성
+        
         String salt = generateSalt();
-
-        // 비밀번호와 솔트값을 결합하여 SHA-256으로 해시화
         String passwordWithSalt = rawPassword + salt;
         String hashedPassword = hashWithSHA256(passwordWithSalt);
 
         Member member = new Member();
         member.setUserid(userid);
         member.setName(name);
-        member.setPassword(hashedPassword); // 해시화된 비밀번호 저장
-        member.setPhoneNumber(encryptWithAES(phoneNumber)); // 전화번호 암호화
-        member.setEmail(encryptWithAES(email)); // 이메일 암호화
+        member.setPassword(hashedPassword);
+        member.setPhoneNumber(encryptWithAES(phoneNumber));
+        member.setEmail(encryptWithAES(email));
         member.setCreatedAt(LocalDateTime.now());
         member.setSalt(salt);
 
