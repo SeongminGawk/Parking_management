@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 이동
+                    window.location.href = "/login"; 
                 } else {
                     alert("Logout failed");
                 }
@@ -21,13 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+    var mapContainer = document.getElementById('map'); 
     var mapOption = {
-        center: new kakao.maps.LatLng(37.450701, 126.570667), // 지도의 초기 중심좌표 (기본값)
-        level: 3 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(37.450701, 126.570667), 
+        level: 3 
     };
 
-    // 지도를 표시할 div와 지도 옵션으로 지도 생성
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
     var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -39,8 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var currentMarker = null;
     var currentInfowindow = null;
 
-    // 날짜 포맷팅 함수
-    //"YYYY-MM-DD HH:MM:SS" 형식
     function formatDate(dateString) {
         var date = new Date(dateString);
         var year = date.getFullYear();
@@ -52,16 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
 
-    // 현재 위치 설정 함수
+    // 현재 위치 설정
     function setCurrentLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat = position.coords.latitude; // 위도
                 var lon = position.coords.longitude; // 경도
 
-                var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 생성
+                var locPosition = new kakao.maps.LatLng(lat, lon); 
 
-                // 현재 위치를 지도의 중심으로 설정
                 map.setCenter(locPosition);
 
                 // 마커 생성
@@ -89,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setDefaultLocation();
             });
         } else {
-            // 브라우저가 Geolocation을 지원하지 않는 경우
             console.error('Geolocation is not supported by this browser');
             setDefaultLocation();
         }
@@ -97,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 기본 위치 설정 함수
     function setDefaultLocation() {
-        var defaultPosition = new kakao.maps.LatLng(37.450701, 126.570667); // 기본 위치
+        var defaultPosition = new kakao.maps.LatLng(37.450701, 126.570667);
         map.setCenter(defaultPosition);
 
         if (currentMarker) {
@@ -138,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayParkingLots(parkingLots, totalPages, currentPage) {
         var infoContainer = document.getElementById('parking-info');
-        infoContainer.innerHTML = ''; // 이전 내용 삭제
+        infoContainer.innerHTML = ''; 
 
         if (parkingLots.length === 0) {
             displayNoParkingLotsMessage();
@@ -166,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         infoContainer.appendChild(table);
 
-        // 페이지 네비게이션 생성
         var pagination = document.createElement('div');
         pagination.className = 'pagination';
         for (var i = 0; i < totalPages; i++) {
@@ -208,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const position = new kakao.maps.LatLng(lot.latitude, lot.longitude);
         map.setCenter(position);
-        map.setLevel(2); // 지도를 더 확대
+        map.setLevel(2); 
 
         const marker = new kakao.maps.Marker({
             map: map,
@@ -224,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // 페이지 로드 시 현재 위치 표시
     setCurrentLocation();
 
-    // "현황" 버튼을 클릭하면 주차장 정보 로드
     document.querySelector('.map-button.current').addEventListener('click', function() {
         loadParkingLots(0);
     });
