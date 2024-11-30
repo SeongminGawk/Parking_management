@@ -8,3 +8,10 @@
 - **주차장 관리**: Kakao Maps API를 활용하여 지도에 주차장을 등록하고 조회.
 - **보안 강화**: Spring Security와 암호화 기술로 안전한 데이터 관리.
 - **반응형 UI**: HTML5와 CSS3로 다양한 화면 크기에서 동작하는 디자인 구현.
+
+## 기술 스택
+- **Backend**: Java (Spring Boot, JPA, Spring Security)
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Database**: PostgreSQL
+- **API**: Kakao Maps API
+- **Encryption**: AES, RSA
